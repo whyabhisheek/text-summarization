@@ -17,7 +17,7 @@ logo_img = "logo.png"
 st.image(logo_img, width=50)
 
 def Summarize_text(prompt,model_name):
-    if model_name == "gpt-4-0125-preview":
+    if model_name == "gpt-4-turbo-preview":
         max_tokens = 4096
     else:
         max_tokens = 6000
