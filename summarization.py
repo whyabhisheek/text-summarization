@@ -34,8 +34,8 @@ def Summarize_text(prompt,model_name):
 
 
 def main():
-    st.title("JIM's Transcription App")
-    prompt = st.text_input("Enter the prompt or questions")
+    st.title("Oven - Chapter writer.")
+    prompt = st.text_input("Enter prompt or questions")
 
     uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
     if uploaded_file is not None:
