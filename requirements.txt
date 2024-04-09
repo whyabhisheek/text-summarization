@@ -1,0 +1,5 @@
+assemblyai
+streamlit
+toml
+streamlit_scrollable_textbox
+openai
