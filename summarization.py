@@ -3,8 +3,7 @@ from openai import OpenAI
 import os
 
 client = OpenAI()
-# client.api_key = os.getenv("OPENAI_API_KEY")
-client.api_key = st.secrets["API_KEY"]
+client.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.set_page_config(
     page_title="Summarization",
