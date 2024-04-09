@@ -43,7 +43,7 @@ def main():
         prompt += "\n\n" + uploaded_text
 
 
-    models = ["gpt-3.5-turbo-16k", "gpt-4-0125-preview"]  # Add more models if needed
+    models = ["gpt-3.5-turbo-16k", "gpt-4-0125-preview","gpt-4-turbo-preview"	 ]  # Add more models if needed
     model_name = st.selectbox("Select the model", models)
     
     if st.button("Generate Summary"):
