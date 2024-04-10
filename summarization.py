@@ -48,7 +48,7 @@ def main():
         prompt += "\n\n" + uploaded_text
 
 
-    models = ["gpt-3.5-turbo-16k","gpt-4-turbo-2024-04-09"	 ]  # Add more models if needed
+    models = ["gpt-4-turbo-2024-04-09","gpt-3.5-turbo-16k"	 ]  # Add more models if needed
     model_name = st.selectbox("Select the model", models)
 
     edit_system_content = st.checkbox("Edit System Content")
