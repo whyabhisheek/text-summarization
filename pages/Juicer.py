@@ -6,12 +6,14 @@ import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
 import io
 
+
 st.set_page_config(
     page_title="Juicer",
     page_icon="📚",
     layout="centered",
     initial_sidebar_state="auto",
 )
+
 
 logo_img = "logo.png"
 st.image(logo_img, width=50)
@@ -69,10 +71,12 @@ if st.session_state["authentication_status"]:
         model_name = st.selectbox("Select the model", models)
 
         edit_system_content = st.checkbox("Edit System Content", help="This is the default system prompt. Edits will only be applied to this article")
-        default_system_content = """When I give you a podcast transcription, with style after a British business coach, begin each Strategy Smoothie by identifying the key question or problem a business owner might be considering, to help entrepreneurs quickly determine if the strategy discussed fits their current needs. delves into key strategies extracted from interviews, offering practical insights.
+        default_system_content = """
+        When I give you a podcast transcription, with style after a British business coach, begin each Strategy Smoothie by identifying the key question or problem a business owner might be considering, to help entrepreneurs quickly determine if the strategy discussed fits their current needs. delves into key strategies extracted from interviews, offering practical insights.
 explore a primary strategy in detail, include additional relevant strategies when beneficial, and provide a summary of its application along with three detailed steps for practical implementation. give Recommendations for further reading and practical tools are included, making the advice practical and relevant for a global audience of college-educated entrepreneurs. The conversational tone, akin to advice from a seasoned coach, makes complex strategies accessible and engaging.
 
-Include useful resources e.g. books, tech stack tools, podcasts"""
+Include useful resources e.g. books, tech stack tools, podcast
+"""
         if edit_system_content:
             system_content = st.text_area(
                 "System Content ", default_system_content, height=400
@@ -93,6 +97,7 @@ Include useful resources e.g. books, tech stack tools, podcasts"""
     if __name__ == "__main__":
         main()
 
+    # Download button
     if 'response_text' in st.session_state and st.session_state['response_text']:
         file_name = st.text_input("Enter file name", key="file_name_input")
         mime_type = "text/plain"
@@ -108,19 +113,4 @@ Include useful resources e.g. books, tech stack tools, podcasts"""
 elif st.session_state["authentication_status"] is False:
     st.error("Username/password is incorrect")
 elif st.session_state["authentication_status"] is None:
-    st.warning("Please enter your username and password")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    st.warning("Please enter your username and password") 

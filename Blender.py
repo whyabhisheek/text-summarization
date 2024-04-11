@@ -64,12 +64,12 @@ if st.session_state["authentication_status"]:
         models = [
             "gpt-4-turbo-2024-04-09",
             "gpt-3.5-turbo-16k",
-        ]  
+        ]  # Add more models if needed
         model_name = st.selectbox("Select the model", models)
 
         edit_system_content = st.checkbox("Edit System Content", help="This is the default system prompt. Edits will only be applied to this article")
         default_system_content = """
-        When I give you a podcast transcript Based on the provided transcript, craft a comprehensive chapter that distils the essence of the conversation for our book targeted at entrepreneurs worldwide. This chapter, ideally 1,500 words or up to 10 minutes of reading time, should be presented in a professional tone reminiscent of a British journalist. It aims to cater to college-educated entrepreneurs seeking actionable solutions to their business challenges. Your narrative should summarise and transform the conversation into an engaging, standalone piece that outlines key insights, strategies, and personal stories the interviewee shares.
+When I give you a podcast transcript Based on the provided transcript, craft a comprehensive chapter that distils the essence of the conversation for our book targeted at entrepreneurs worldwide. This chapter, ideally 1,500 words or up to 10 minutes of reading time, should be presented in a professional tone reminiscent of a British journalist. It aims to cater to college-educated entrepreneurs seeking actionable solutions to their business challenges. Your narrative should summarise and transform the conversation into an engaging, standalone piece that outlines key insights, strategies, and personal stories the interviewee shares.
 
 Additionally, enrich the chapter by incorporating one piece of relevant industry research supporting the discussed marketing strategy or business solution. This research should be contemporary and applicable, enhancing the credibility and depth of the advice given.
 
@@ -81,16 +81,16 @@ Use the following structure with 4 sections.
 
 - think of a title
 - Prologue - subtitle: [150 words]
-- The Opportunity - subtitle:(150 - 200 words)
+- The Opportunity - subtitle (150 - 200 words)
 - Crossing the chasm - subtitle: [800 words]
-- Epilogue - subtitle: [150 words]
+- Epilogue - Reflections - subtitle: [150 words]
 
 Include at least one quote from the interviewee in each section, and also include their country name, city ot where they are from in Prologue section
 
 Do not mention that the interviewee is a guest on the podcast.
 
 This service is provided by UnNoticed Ventures Ltd., focusing on transforming insightful conversations into impactful written content for entrepreneurs.
-        """
+"""
         if edit_system_content:
             system_content = st.text_area(
                 "System Content ", default_system_content, height=400
@@ -105,13 +105,14 @@ This service is provided by UnNoticed Ventures Ltd., focusing on transforming in
             response_text = completion.choices[0].message.content
 
             if response_text:
-               st.session_state['response_text'] = response_text
-               st.markdown(f"<div id='response_text_div'>{response_text}</div>", unsafe_allow_html=True)
+                st.write(response_text)
+                st.session_state['response_text'] = response_text
 
     if __name__ == "__main__":
         main()
 
-if 'response_text' in st.session_state and st.session_state['response_text']:
+    # Download button
+    if 'response_text' in st.session_state and st.session_state['response_text']:
         file_name = st.text_input("Enter file name", key="file_name_input")
         mime_type = "text/plain"
         file_obj = io.StringIO(st.session_state['response_text'])
@@ -126,4 +127,4 @@ if 'response_text' in st.session_state and st.session_state['response_text']:
 elif st.session_state["authentication_status"] is False:
     st.error("Username/password is incorrect")
 elif st.session_state["authentication_status"] is None:
-    st.warning("Please enter your username and password")
+    st.warning("Please enter your username and password") 
