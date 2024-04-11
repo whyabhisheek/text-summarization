@@ -3,3 +3,5 @@ streamlit
 toml
 streamlit_scrollable_textbox
 openai
+pyyaml
+streamlit-authenticator

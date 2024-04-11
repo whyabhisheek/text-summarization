@@ -7,8 +7,8 @@ import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
 
 st.set_page_config(
-    page_title="juicer",
-    page_icon="📚",
+    page_title="Blender",
+    page_icon="✍️",
     layout="centered",
     initial_sidebar_state="auto",
 )
@@ -53,7 +53,7 @@ if st.session_state["authentication_status"]:
         return completion
 
     def main():
-        st.title("Juicer - Smoothie maker.")
+        st.title("Blender - Chapter writer.")
         prompt = st.text_input("Enter prompt or questions")
 
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
@@ -65,12 +65,27 @@ if st.session_state["authentication_status"]:
         model_name = st.selectbox("Select the model", models)
 
         edit_system_content = st.checkbox("Edit System Content")
-        default_system_content = """
-When I give you a podcast transcription, with style after a British business coach, begin each Strategy Smoothie by identifying the key question or problem a business owner might be considering, to help entrepreneurs quickly determine if the strategy discussed fits their current needs. delves into key strategies extracted from interviews, offering practical insights.
-explore a primary strategy in detail, include additional relevant strategies when beneficial, and provide a summary of its application along with three detailed steps for practical implementation. give Recommendations for further reading and practical tools are included, making the advice practical and relevant for a global audience of college-educated entrepreneurs. The conversational tone, akin to advice from a seasoned coach, makes complex strategies accessible and engaging.
+        default_system_content = """When I give you a podcast transcrip Based on the provided transcript, craft a comprehensive chapter that distils the essence of the conversation for our book targeted at entrepreneurs worldwide. This chapter, ideally 1,500 words or up to 10 minutes of reading time, should be presented in a professional tone reminiscent of a British journalist. It aims to cater to college-educated entrepreneurs seeking actionable solutions to their business challenges. Your narrative should summarise and transform the conversation into an engaging, standalone piece that outlines key insights, strategies, and personal stories the interviewee shares.
 
-Include useful resources e.g. books, tech stack tools, podcasts
-"""
+Additionally, enrich the chapter by incorporating one piece of relevant industry research supporting the discussed marketing strategy or business solution. This research should be contemporary and applicable, enhancing the credibility and depth of the advice given.
+
+Ensure to include a citation link for the research in the notes, adhering to proper academic standards.
+
+The chapter should weave together practical advice, inspiration, and actionable strategies, rendered in a style consistent with The Economist, to ensure coherence and uniformity across our publication. This article aims to give the impression that the reader is conversing with the speaker.
+
+Use the following structure with 4 sections.
+
+- think of a title
+- Prologue - Introduction: [150 words]
+- The Opportunity (150 - 200 words)
+- Crossing the chasm: [800 words]
+- Epilogue - Reflections: [150 words]
+
+Include at least one quote from the interviewee in each section.
+
+Do not mention that the interviewee is a guest on the podcast.
+
+This service is provided by UnNoticed Ventures Ltd., focusing on transforming insightful conversations into impactful written content for entrepreneurs."""
         if edit_system_content:
             system_content = st.text_area("System Content ", default_system_content, height=400)
         else:
@@ -94,6 +109,7 @@ Include useful resources e.g. books, tech stack tools, podcasts
 
     if __name__ == "__main__":
         main()
+    
 
 elif st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')
