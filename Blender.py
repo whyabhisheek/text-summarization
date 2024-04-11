@@ -81,7 +81,7 @@ Use the following structure with 4 sections.
 - Crossing the chasm: [800 words]
 - Epilogue - Reflections: [150 words]
 
-Include at least one quote from the interviewee in each section.
+Include at least one quote from the interviewee in each section, and also include their country name, city ot where they are from in Prologue section
 
 Do not mention that the interviewee is a guest on the podcast.
 
