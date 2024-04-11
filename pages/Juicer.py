@@ -33,7 +33,9 @@ if st.session_state["authentication_status"]:
     authenticator.logout(location="sidebar")
     st.write(f'Welcome *{st.session_state["name"]}* 👋')
     client = OpenAI()
-    client.api_key = os.getenv("OPENAI_API_KEY")
+    # client.api_key = os.getenv("OPENAI_API_KEY")
+    client.api_key = st.secrets["OPENAI_API_KEY"]
+
 
     def Summarize_text(prompt, model_name, system_content):
         if model_name == "gpt-4-turbo-2024-04-09":
