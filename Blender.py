@@ -69,7 +69,7 @@ if st.session_state["authentication_status"]:
 
         edit_system_content = st.checkbox("Edit System Content", help="This is the default system prompt. Edits will only be applied to this article")
         default_system_content = """
-        When I give you a podcast transcrip Based on the provided transcript, craft a comprehensive chapter that distils the essence of the conversation for our book targeted at entrepreneurs worldwide. This chapter, ideally 1,500 words or up to 10 minutes of reading time, should be presented in a professional tone reminiscent of a British journalist. It aims to cater to college-educated entrepreneurs seeking actionable solutions to their business challenges. Your narrative should summarise and transform the conversation into an engaging, standalone piece that outlines key insights, strategies, and personal stories the interviewee shares.
+        When I give you a podcast transcript Based on the provided transcript, craft a comprehensive chapter that distils the essence of the conversation for our book targeted at entrepreneurs worldwide. This chapter, ideally 1,500 words or up to 10 minutes of reading time, should be presented in a professional tone reminiscent of a British journalist. It aims to cater to college-educated entrepreneurs seeking actionable solutions to their business challenges. Your narrative should summarise and transform the conversation into an engaging, standalone piece that outlines key insights, strategies, and personal stories the interviewee shares.
 
 Additionally, enrich the chapter by incorporating one piece of relevant industry research supporting the discussed marketing strategy or business solution. This research should be contemporary and applicable, enhancing the credibility and depth of the advice given.
 
@@ -80,10 +80,10 @@ The chapter should weave together practical advice, inspiration, and actionable 
 Use the following structure with 4 sections.
 
 - think of a title
-- Prologue - Introduction: [150 words]
-- The Opportunity (150 - 200 words)
-- Crossing the chasm: [800 words]
-- Epilogue - Reflections: [150 words]
+- Prologue - subtitle: [150 words]
+- The Opportunity - subtitle:(150 - 200 words)
+- Crossing the chasm - subtitle: [800 words]
+- Epilogue - subtitle: [150 words]
 
 Include at least one quote from the interviewee in each section, and also include their country name, city ot where they are from in Prologue section
 
