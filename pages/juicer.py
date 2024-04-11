@@ -7,7 +7,7 @@ import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
 
 st.set_page_config(
-    page_title="juicer",
+    page_title="Juicer",
     page_icon="📚",
     layout="centered",
     initial_sidebar_state="auto",
