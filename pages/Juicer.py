@@ -1,11 +1,10 @@
 import streamlit as st
 from openai import OpenAI
+import streamlit_scrollable_textbox as stx
 import os
 import yaml
 import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
-import io
-
 
 st.set_page_config(
     page_title="Juicer",
@@ -14,30 +13,28 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
-
 logo_img = "logo.png"
 st.image(logo_img, width=50)
 
-with open("config.yaml") as file:
+with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
-    config["credentials"],
-    config["cookie"]["name"],
-    config["cookie"]["key"],
-    config["cookie"]["expiry_days"],
-    config["preauthorized"],
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
 )
 
 authenticator.login()
 
 if st.session_state["authentication_status"]:
-    authenticator.logout(location="sidebar")
+    authenticator.logout(location='sidebar')
     st.write(f'Welcome *{st.session_state["name"]}* 👋')
     client = OpenAI()
-    # client.api_key = os.getenv("OPENAI_API_KEY")
     client.api_key = st.secrets["OPENAI_API_KEY"]
-
+    # client.api_key = os.getenv("OPENAI_API_KEY")
 
     def Summarize_text(prompt, model_name, system_content):
         if model_name == "gpt-4-turbo-2024-04-09":
@@ -49,38 +46,34 @@ if st.session_state["authentication_status"]:
             model=model_name,
             messages=[
                 {"role": "system", "content": system_content},
-                {"role": "user", "content": prompt},
+                {"role": "user", "content": prompt}
             ],
-            max_tokens=max_tokens,
+            max_tokens=max_tokens
         )
         return completion
 
     def main():
-        st.title("Blender - Chapter writer.")
-        prompt = st.text_input("Enter prompt or questions", help="This prompt will be specific to this article.")
+        st.title("Juicer - Strategy writer.")
+        prompt = st.text_input("Enter prompt or questions",  help="This prompt will be specific to this article.")
 
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
         if uploaded_file is not None:
             uploaded_text = uploaded_file.read().decode("utf-8")
             prompt += "\n\n" + uploaded_text
 
-        models = [
-            "gpt-4-turbo-2024-04-09",
-            "gpt-3.5-turbo-16k",
-        ]  # Add more models if needed
+        models = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo-16k"]  # Add more models if needed
         model_name = st.selectbox("Select the model", models)
 
         edit_system_content = st.checkbox("Edit System Content", help="This is the default system prompt. Edits will only be applied to this article")
-        default_system_content = """
-        When I give you a podcast transcription, with style after a British business coach, begin each Strategy Smoothie by identifying the key question or problem a business owner might be considering, to help entrepreneurs quickly determine if the strategy discussed fits their current needs. delves into key strategies extracted from interviews, offering practical insights.
-explore a primary strategy in detail, include additional relevant strategies when beneficial, and provide a summary of its application along with three detailed steps for practical implementation. give Recommendations for further reading and practical tools are included, making the advice practical and relevant for a global audience of college-educated entrepreneurs. The conversational tone, akin to advice from a seasoned coach, makes complex strategies accessible and engaging.
+        default_system_content = """When I give you a podcast transcription, with style after a British business coach, begin each Strategy Smoothie by identifying the key question or problem a business owner might be considering, to help entrepreneurs quickly determine if the strategy discussed fits their current needs. delves into key strategies extracted from interviews, offering practical insights.
 
-Include useful resources e.g. books, tech stack tools, podcast
+explore a primary strategy in detail, include additional relevant strategies when beneficial, and provide a summary of its application along with three detailed steps for practical implementation. give Recommendations for further reading and practical tools are included, making the advice practical and relevant for a global audience of college-educated entrepreneurs. 
+The conversational tone, akin to advice from a seasoned coach, makes complex strategies accessible and engaging.
+
+Include useful resources e.g. books, tech stack tools, podcasts
 """
         if edit_system_content:
-            system_content = st.text_area(
-                "System Content ", default_system_content, height=400
-            )
+            system_content = st.text_area("System Content ", default_system_content, height=400)
         else:
             system_content = default_system_content
 
@@ -91,26 +84,20 @@ Include useful resources e.g. books, tech stack tools, podcast
             response_text = completion.choices[0].message.content
 
             if response_text:
+                loading_placeholder.empty()
                 st.write(response_text)
-                st.session_state['response_text'] = response_text
+                st.download_button(
+                    label="Download Summary",
+                    data=response_text.encode("utf-8"),
+                    file_name="summary.txt",
+                    mime="text/plain"
+                )
 
     if __name__ == "__main__":
         main()
 
-    # Download button
-    if 'response_text' in st.session_state and st.session_state['response_text']:
-        file_name = st.text_input("Enter file name", key="file_name_input")
-        mime_type = "text/plain"
-        file_obj = io.StringIO(st.session_state['response_text'])
-        download_button = st.download_button(
-            label="Download File",
-            data=file_obj.getvalue(),
-            file_name=f"{file_name}.txt" if file_name else "output.txt",
-            mime=mime_type,
-            key="download_button",
-        )
 
 elif st.session_state["authentication_status"] is False:
-    st.error("Username/password is incorrect")
+    st.error('Username/password is incorrect')
 elif st.session_state["authentication_status"] is None:
-    st.warning("Please enter your username and password") 
+    st.warning('Please enter your username and password')
