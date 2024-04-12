@@ -91,21 +91,42 @@ This service is provided by UnNoticed Ventures Ltd., focusing on transforming in
         else:
             system_content = default_system_content
 
-        if st.button("Generate Summary"):
+        if "response_text" not in st.session_state:
+            st.session_state["response_text"] = ""
+
+        generate_summary_button = st.button("Generate Summary")
+
+        output_container = st.container()
+
+        if generate_summary_button:
             st.write("Generating...")
             loading_placeholder = st.empty()
             completion = Summarize_text(prompt, model_name, system_content)
             response_text = completion.choices[0].message.content
 
+            loading_placeholder.empty()
+
             if response_text:
-                loading_placeholder.empty()
-                st.write(response_text)
                 st.download_button(
                     label="Download Summary",
                     data=response_text.encode("utf-8"),
                     file_name="summary.txt",
                     mime="text/plain"
                 )
+            else:
+                st.write("No summary generated. Please try again.")
+
+            st.session_state["response_text"] = response_text
+
+            with output_container:
+                output_container.empty()  
+                st.write(response_text)
+
+        else:
+            with output_container:
+                output_container.empty()  
+                if st.session_state["response_text"]:
+                    st.write(st.session_state["response_text"])
 
     if __name__ == "__main__":
         main()
