@@ -1,6 +1,5 @@
 import streamlit as st
 from openai import OpenAI
-import streamlit_scrollable_textbox as stx
 import os
 import yaml
 import streamlit_authenticator as stauth
@@ -38,7 +37,7 @@ if st.session_state["authentication_status"]:
     # client.api_key = os.getenv("OPENAI_API_KEY")
 
     def Summarize_text(prompt, model_name, system_content):
-        if model_name == "gpt-4-turbo-2024-04-09":
+        if model_name == "gpt-4-turbo-2024-04-09" or "gpt-4o-2024-05-13":
             max_tokens = 4096
         else:
             max_tokens = 6000
@@ -62,7 +61,7 @@ if st.session_state["authentication_status"]:
             uploaded_text = uploaded_file.read().decode("utf-8")
             prompt += "\n\n" + uploaded_text
 
-        models = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo-16k"]  # Add more models if needed
+        models = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo-16k", "gpt-4o-2024-05-13"]
         model_name = st.selectbox("Select the model", models)
 
         edit_system_content = st.checkbox("Edit System Content", help="This is the default system prompt. Edits will only be applied to this article")
