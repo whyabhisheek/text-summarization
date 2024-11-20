@@ -23,7 +23,6 @@ authenticator = stauth.Authenticate(
     config['cookie']['name'],
     config['cookie']['key'],
     config['cookie']['expiry_days'],
-    config['preauthorized']
 )
 
 authenticator.login()
@@ -31,23 +30,22 @@ authenticator.login()
 if st.session_state["authentication_status"]:
     authenticator.logout(location='sidebar')
     st.write(f'Welcome *{st.session_state["name"]}* 👋')
-    client = OpenAI()
-    client.api_key = st.secrets["OPENAI_API_KEY"]
-    # client.api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI(
+        api_key="0JBM6ZYdiBLTk5MOQOIXfC",
+        base_url="https://cloud.olakrutrim.com/v1",
+    )
+    # client.api_key = st.secrets["OPENAI_API_KEY"]
+    client.api_key = os.getenv("OPENAI_API_KEY")
 
     def Summarize_text(prompt, model_name, system_content):
-        if model_name == "gpt-4-turbo-2024-04-09" or "gpt-4o-2024-05-13":
-            max_tokens = 4096
-        else:
-            max_tokens = 6000
+
 
         completion = client.chat.completions.create(
-            model=model_name,
+            model="Meta-Llama-3.1-8B-Instruct",
             messages=[
                 {"role": "system", "content": system_content},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=max_tokens
         )
         return completion
 
@@ -135,3 +133,4 @@ elif st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')
 elif st.session_state["authentication_status"] is None:
     st.warning('Please enter your username and password')
+
